@@ -34,9 +34,10 @@ group = "com.alekseysamoylov"
 version = "1.0"
 
 dependencies {
-    implementation("org.telegram:telegrambots-spring-boot-starter:4.1.2")
     implementation("org.springframework.boot:spring-boot-starter-web")
-
+    implementation("io.springfox:springfox-swagger2:2.9.2")
+    implementation("io.springfox:springfox-swagger-ui:2.9.2")
+    implementation("org.jsoup:jsoup:1.12.1")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {

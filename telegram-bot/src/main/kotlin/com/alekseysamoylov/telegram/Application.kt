@@ -1,9 +1,9 @@
 package com.alekseysamoylov.telegram
 
 import org.springframework.boot.SpringApplication
-import org.telegram.telegrambots.ApiContextInitializer
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.PropertySource
+import org.telegram.telegrambots.ApiContextInitializer
 
 
 @SpringBootApplication
