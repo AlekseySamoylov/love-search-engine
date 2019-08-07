@@ -24,6 +24,7 @@ class IntimByGirlPageParser : PageParser {
                 { getValueParam(it) }
             )
         val person = Person()
+        person.pageLink = DOMAIN_URL + url
         person.name = parameterMap["Имя:"].orEmpty()
         person.age = parameterMap["Возраст:"].orEmpty()
         person.email = parameterMap["E-mail:"].orEmpty()

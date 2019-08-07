@@ -2,8 +2,6 @@ package com.alekseysamoylov.telegram.connector
 
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
-import java.time.LocalDateTime
-import java.util.*
 
 
 @Service
@@ -11,8 +9,6 @@ class CrawlerByService {
 
     companion object {
         val userRequestCounterMap = mutableMapOf<Int, Int>()
-        var resultCache = emptyArray<Person>()
-        var lastUpdateDate = LocalDateTime.now()
     }
 
     private fun getCounterForUser(userId: Int): Int {
@@ -30,19 +26,9 @@ class CrawlerByService {
         userRequestCounterMap[userId] = 0
     }
 
-    private fun getCachedPersons(): Array<Person> {
-        if (lastUpdateDate.plusMinutes(5).isBefore(LocalDateTime.now()) || resultCache.isEmpty()) {
-            lastUpdateDate = LocalDateTime.now()
-            val restTemplate = RestTemplate();
-            resultCache = restTemplate.getForEntity("http://localhost:8086/persons", Array<Person>::class.java).body!!
-            return resultCache
-        } else {
-            return resultCache
-        }
-    }
-
     fun getPersons(userId: Int, offset: Int?): String {
-        val persons = getCachedPersons()
+        val restTemplate = RestTemplate()
+        val persons = restTemplate.getForEntity("http://localhost:8086/persons", Array<Person>::class.java).body!!
         if (offset != null) {
            return persons[offset].toString()
         }
@@ -57,6 +43,7 @@ class CrawlerByService {
 }
 
 class Person(
+    var pageLink: String = "",
     var name: String = "",
     var age: String = "",
     var email: String = "",
@@ -70,7 +57,7 @@ class Person(
     var photos: List<String> = emptyList()
 ) {
     override fun toString(): String {
-        return "Person(name='$name', age='$age', email='$email', " +
+        return "Person(pageLink='$pageLink', name='$name', age='$age', email='$email', " +
                 "phone='$phone', publicationDate='$publicationDate', seeCount='$seeCount', " +
                 "height='$height', weight='$weight', price='$price', message='$message', photos=$photos)"
     }

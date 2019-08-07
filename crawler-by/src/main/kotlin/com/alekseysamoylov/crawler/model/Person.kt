@@ -2,6 +2,7 @@ package com.alekseysamoylov.crawler.model
 
 
 class Person(
+    var pageLink: String = "",
     var name: String = "",
     var age: String = "",
     var email: String = "",
